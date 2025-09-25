@@ -9,18 +9,11 @@ dotenv.config();
 
 const app = express();
 
-// CORS config با preflight
-const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'https://parsa-tejarat.onrender.com',
-  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization'],
-  credentials: true
-};
-
-app.use(cors(corsOptions));
-
-// پاسخ به preflight requests
-app.options('*', cors(corsOptions));
+// CORS config
+app.use(cors({
+  origin: ['https://parsa-tejarat.onrender.com/', 'http://localhost:3000'],
+  credentials: true,
+}));
 
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -34,7 +27,7 @@ app.use('/products', productRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/auth', authRoutes);
 
-// Root route (برای تست سرور)
+// Root route (for testing server)
 app.get("/", (req, res) => {
   res.send("🚀 Server is running and connected to MongoDB ✅");
 });
@@ -57,3 +50,4 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => {
     console.error("MongoDB connection error ❌", err);
   });
+
