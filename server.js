@@ -11,7 +11,7 @@ const app = express();
 
 // CORS config
 app.use(cors({
-  origin: ['https://persa-trade-frontend.onrender.com', 'http://localhost:3000'],
+  origin: ['https://parsa-tejarat.onrender.com/', 'http://localhost:3000'],
   credentials: true,
 }));
 
